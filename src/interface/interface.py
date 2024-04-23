@@ -1,6 +1,6 @@
 import os
-from src.classes.sexual_position import SexualPosition
-from src.classes.people import People
+from src.entities.sexual_position import SexualPosition
+from src.entities.people import People
 
 
 # This will be a console interface for a Lineal Programming problem
@@ -57,7 +57,7 @@ class Interface:
             Options.DELETE_PEOPLE: self.__delete_people,
             Options.LIST_PEOPLE: self.__list_people,
             Options.LIST_PEOPLE_AND_POSITIONS: self.__list_people_and_positions,
-            # Options.SELECT_PROBLEM: self.__select_problem,
+            Options.SELECT_PROBLEM: self.__select_problem,
             # Options.SHOW_SOLUTION: self.__show_solution,
         }
 
@@ -348,6 +348,9 @@ class Interface:
                     f"    {sexual_position.name}: Pleasure: {people.get_pleasure_of_position(sexual_position.name)}, Hardness: {people.get_hardness_of_position(sexual_position.name)}"
                 )
         input("Press any key to continue")
+
+    def __select_problem(self):
+        """Select a problem to solve"""
 
     def run(self):
         """Main function to run the interface"""
