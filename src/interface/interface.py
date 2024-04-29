@@ -1,6 +1,8 @@
 import os
 from src.entities.sexual_position import SexualPosition
 from src.entities.people import People
+from src.problems.abstract_problem import AbstractProblem, ProblemsTypes
+from src.problems.implementations.max_time import MaxTime
 
 
 # This will be a console interface for a Lineal Programming problem
@@ -46,7 +48,12 @@ class Interface:
     def __init__(self):
         self.__sexual_positions: list[SexualPosition] = []
         self.__people: list[People] = []
-        self.__problem = None
+        self.__problems: list[ProblemsTypes] = [
+            ProblemsTypes.MAX_TIME,
+            ProblemsTypes.MAX_PLEASURE,
+            ProblemsTypes.MAX_ORGASM,
+            ProblemsTypes.MAX_ENERGY,
+        ]
         self.options = {
             Options.CREATE_SEXUAL_POSITION: self.__create_sexual_position,
             Options.EDIT_SEXUAL_POSITION: self.__edit_sexual_position,
@@ -351,6 +358,33 @@ class Interface:
 
     def __select_problem(self):
         """Select a problem to solve"""
+        if not self.__people or not self.__sexual_positions:
+            print("You need to create at least one people and one sexual position")
+            input("Press any key to continue")
+            return
+
+        print("Select a problem to solve:")
+        for index, problem in enumerate(self.__problems):
+            print(f"{index}: {problem}")
+
+        index = self._handle_input(
+            "Select a problem to solve: ", Options.SELECT_PROBLEM
+        )
+
+        if index:
+            if index.lower() == Options.CANCEL_KEY:
+                return
+            index = int(index)
+
+            self.__problems[index].solve()
+            problem = self.__get_problem(index)
+            solution = problem.solve()
+            print(solution)
+
+    def __get_problem(self, index):
+        if self.__problems[index] == ProblemsTypes.MAX_TIME:
+            return MaxTime(self.__people, self.__sexual_positions)
+        # Todo: poner los problemas restantes
 
     def run(self):
         """Main function to run the interface"""
