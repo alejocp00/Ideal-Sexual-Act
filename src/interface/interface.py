@@ -2,6 +2,7 @@ import os
 from src.entities.sexual_position import SexualPosition
 from src.entities.people import People
 from src.problems.abstract_problem import AbstractProblem, ProblemsTypes
+from src.problems.implementations.max_min_pleasure import MaxMinPleasure
 from src.problems.implementations.max_time import MaxTime
 from json import dumps, loads
 
@@ -53,9 +54,10 @@ class Interface:
         self.__people: list[People] = []
         self.__problems: list[ProblemsTypes] = [
             ProblemsTypes.MAX_TIME,
-            ProblemsTypes.MAX_PLEASURE,
-            ProblemsTypes.MAX_ORGASM,
-            ProblemsTypes.MAX_ENERGY,
+            ProblemsTypes.MAX_MIN_PLEASURE,
+            ProblemsTypes.MINIMIZE_MAX_TIRED,
+            ProblemsTypes.MINIMIZE_INITIAL_ENERGY,
+            ProblemsTypes.MAX_INITIAL_PLEASURE,
         ]
         self.options = {
             Options.CREATE_SEXUAL_POSITION: self.__create_sexual_position,
@@ -390,6 +392,9 @@ class Interface:
     def __get_problem(self, index):
         if self.__problems[index] == ProblemsTypes.MAX_TIME:
             return MaxTime(self.__people, self.__sexual_positions)
+        if self.__problems[index] == ProblemsTypes.MAX_MIN_PLEASURE:
+            return MaxMinPleasure(self.__people, self.__sexual_positions)
+        raise NotImplementedError("The problem is not implemented yet")
         # Todo: poner los problemas restantes
 
     def run(self):

@@ -6,10 +6,13 @@ from pulp import LpProblem, LpVariable, lpSum, LpMaximize
 
 
 class ProblemsTypes:
-    MAX_TIME = "Max Time"
-    MAX_PLEASURE = "Max Pleasure"
-    MAX_ORGASM = "Max Orgasm"
-    MAX_ENERGY = "Max Energy"
+    MAX_TIME = "Maximizar la duración del acto sexual."
+    MAX_MIN_PLEASURE = (
+        "Maximizar el placer del que menor placer alcance al finalizar el acto sexual."
+    )
+    MINIMIZE_MAX_TIRED = "Minimizar el cansancio del participante con mayor cansancio al finalizar el acto sexual"
+    MINIMIZE_INITIAL_ENERGY = "Minimizar la energía inicial de todos los participantes de forma que al terminar todos hayan alcanzado el orgasmo y tengan la misma energía"
+    MAX_INITIAL_PLEASURE = "Maximizar el placer inicial de un participante específico, de forma tal que todos los participantes, excepto el específico, alcancen el orgasmo."
 
 
 class AbstractProblem:
