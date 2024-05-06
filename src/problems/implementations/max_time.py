@@ -35,6 +35,7 @@ Restricciones comunes:
 Problema 1
 
 Encontrar el tiempo que se debe estar en cada postura para que el tiempo del acto sexual sea el mayor posible, resolviendo el problema de: $max(\sum_{i}^{n}Xi$ sujeto a las 4 restricciones antes puestas
+
 """
 
 
@@ -59,7 +60,7 @@ class MaxTime(AbstractProblem):
         for i in range(1, len(self.N)):
             for j in range(len(self.J)):
                 constraints.append(
-                    self.P[i][j] == self.P[i - 1][j] + self.P[i][j] * self.X[i]
+                    self.P[i][j] == self.P[i - 1][j] + self.Pa[i][j] * self.X[i]
                 )
 
         # En todo momento la energía es mayor igual que cero
@@ -85,9 +86,6 @@ class MaxTime(AbstractProblem):
             [LpVariable(f"P{i}{j}", lowBound=0) for j in range(len(self.J))]
             for i in range(len(self.N))
         ]
-
-        self.C = self._build_C()
-        self.P = self._build_P()
 
         problem += self.objective_function()
 

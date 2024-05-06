@@ -2,6 +2,7 @@
 # using the simplex method
 from src.entities.people import People
 from src.entities.sexual_position import SexualPosition
+from pulp import LpProblem, LpVariable, lpSum, LpMaximize
 
 
 class ProblemsTypes:
@@ -17,7 +18,7 @@ class AbstractProblem:
         self.N = positions
         self.P_t = [people.orgasm_pleasure for people in peoples]
         self.C = self._build_C()
-        self.P = self._build_P()
+        self.Pa = self._build_P()
 
     def _build_C(self) -> list[list[int]]:
         C = [[0 for _ in range(len(self.J))] for _ in range(len(self.N))]

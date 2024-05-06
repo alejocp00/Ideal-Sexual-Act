@@ -3,6 +3,7 @@ from src.entities.sexual_position import SexualPosition
 from src.entities.people import People
 from src.problems.abstract_problem import AbstractProblem, ProblemsTypes
 from src.problems.implementations.max_time import MaxTime
+from json import dumps, loads
 
 
 # This will be a console interface for a Lineal Programming problem
@@ -22,6 +23,7 @@ from src.problems.implementations.max_time import MaxTime
 # - Show the solution of the problem
 class Options:
     CANCEL_KEY = "c"
+    SELECT_OPTION = "Select an option"
     CREATE_SEXUAL_POSITION = "Create a sexual position"
     DELETE_SEXUAL_POSITION = "Delete a sexual position"
     EDIT_SEXUAL_POSITION = "Edit a sexual position"
@@ -39,8 +41,9 @@ class Options:
         "List all people and their pleasure and hardness for each sexual position"
     )
     SELECT_PROBLEM = "Choose a problem to solve"
-    SHOW_SOLUTION = "16"
-    SELECT_OPTION = "17"
+    EXPORT_DATA = "Export people and positions to a file"
+    LOAD_DATA = "Load people and positions from a file"
+    FILE_NAME = "data.json"
 
 
 class Interface:
@@ -65,7 +68,8 @@ class Interface:
             Options.LIST_PEOPLE: self.__list_people,
             Options.LIST_PEOPLE_AND_POSITIONS: self.__list_people_and_positions,
             Options.SELECT_PROBLEM: self.__select_problem,
-            # Options.SHOW_SOLUTION: self.__show_solution,
+            Options.EXPORT_DATA: self.__export_data,
+            Options.LOAD_DATA: self.__load_data,
         }
 
     def _update_people_sexual_positions(self, new_position_name):
@@ -381,6 +385,7 @@ class Interface:
             problem = self.__get_problem(index)
             solution = problem.solve()
             print(solution)
+            input("Press any key to continue")
 
     def __get_problem(self, index):
         if self.__problems[index] == ProblemsTypes.MAX_TIME:
@@ -399,9 +404,39 @@ class Interface:
             entry = self._handle_input("Select an option: ", Options.SELECT_OPTION)
 
             if entry:
-                if entry.lower() == Options.CANCEL_KEY:
-                    break
                 os.system("clear")
                 self.options[list(self.options.keys())[int(entry)]]()
+            else:
+                break
 
         print("Goodbye!")
+
+    def __export_data(self):
+        """Export people and positions to a file"""
+        data = {
+            "people": [people.to_dict() for people in self.__people],
+            "positions": [position.to_dict() for position in self.__sexual_positions],
+        }
+        with open(Options.FILE_NAME, "w") as file:
+            file.write(dumps(data))
+
+        print("Data exported successfully")
+        input("Press any key to continue")
+
+    def __load_data(self):
+        """Load people and positions from a file"""
+        try:
+            with open(Options.FILE_NAME, "r") as file:
+                data = loads(file.read())
+                self.__people = [People.from_dict(people) for people in data["people"]]
+                self.__sexual_positions = [
+                    SexualPosition.from_dict(position) for position in data["positions"]
+                ]
+                print("Data loaded successfully")
+                input("Press any key to continue")
+        except FileNotFoundError:
+            print("The file does not exist")
+            input("Press any key to continue")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            input("Press any key to continue")
