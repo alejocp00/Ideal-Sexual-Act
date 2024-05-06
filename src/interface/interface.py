@@ -38,7 +38,7 @@ class Options:
     LIST_PEOPLE_AND_POSITIONS = (
         "List all people and their pleasure and hardness for each sexual position"
     )
-    SELECT_PROBLEM = "15"
+    SELECT_PROBLEM = "Choose a problem to solve"
     SHOW_SOLUTION = "16"
     SELECT_OPTION = "17"
 
@@ -333,6 +333,8 @@ class Interface:
             return is_int(entry) and in_range(int(entry), 0, len(self.__people) - 1)
         elif option == Options.SELECT_OPTION:
             return is_int(entry) and in_range(entry, 0, len(self.options) - 1)
+        elif option == Options.SELECT_PROBLEM:
+            return is_int(entry) and in_range(entry, 0, len(self.__problems) - 1)
         else:
             return False
 
@@ -376,7 +378,6 @@ class Interface:
                 return
             index = int(index)
 
-            self.__problems[index].solve()
             problem = self.__get_problem(index)
             solution = problem.solve()
             print(solution)
