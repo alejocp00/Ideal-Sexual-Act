@@ -5,10 +5,10 @@ from src.entities.sexual_position import SexualPosition
 
 
 class ProblemsTypes:
-    MAX_TIME = "MAX_TIME"
-    MAX_PLEASURE = "MAX_PLEASURE"
-    MAX_ORGASM = "MAX_ORGASM"
-    MAX_ENERGY = "MAX_ENERGY"
+    MAX_TIME = "Max Time"
+    MAX_PLEASURE = "Max Pleasure"
+    MAX_ORGASM = "Max Orgasm"
+    MAX_ENERGY = "Max Energy"
 
 
 class AbstractProblem:
@@ -16,8 +16,8 @@ class AbstractProblem:
         self.J = peoples
         self.N = positions
         self.P_t = [people.orgasm_pleasure for people in peoples]
-        self.C = self._build_C(peoples, positions)
-        self.P = self._build_P(peoples)
+        self.C = self._build_C()
+        self.P = self._build_P()
 
     def _build_C(self) -> list[list[int]]:
         C = [[0 for _ in range(len(self.J))] for _ in range(len(self.N))]
