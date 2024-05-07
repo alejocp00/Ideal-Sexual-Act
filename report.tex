@@ -5,7 +5,7 @@
 \usepackage{amsthm}
 
 
-\makeindex
+
 \begin{document}
 
 \title{Proyecto de Modelos Matemáticos Aplicados }
@@ -14,10 +14,11 @@
 \date{}
 
 \maketitle
+\tableofcontents
+\newpage
 
 
-
-\section{Introduction}
+\section{Introducción}
 En una investigación anterior realizada en la facultad de Matemática y Computación de la Universidad de La Habana, MATCOM, se proponía basándose en trabajos anteriores varios modelos matemáticos para modelar y resolver problemáticas relacionadas con el acto sexual. En el mismo se plantean los siguientes 5 problemas:
 
 \begin{enumerate}
@@ -178,9 +179,46 @@ $$P_{nj} \geq h, \forall j \in J$$
 \section{Consideraciones}
 
 Primeramente, abarcar todos los problemas planteados en la investigación no fue posible, por lo que se decidió implementar los problemas 1 y 2. La implementación de los problemas 3, 4 y 5 se deja como trabajo futuro.
-\\
+\\ \\
 Los problemas pueden ser modelados teniendo en cuenta la preferencia sexual de cada participante, es decir, si el participante $J_i$ está dispuesto a ejecutar la postura dada con el participante $J_j$, con $0 \leq i <j \leq |J|$. 
 
+\section{Sobre importar y exportar datos}
 
+Dado que una de las funcionalidades del trabajo es la de exportar e importar los datos de los participantes y posturas a un archivo de json, puede ser útil conocer cómo crear un archivo reconocible por el programa de forma manual. El archivo ha de llamarse data.json y tener la siguiente estructura:
+
+\begin{verbatim}
+{
+    "people": [
+        {
+            "name": "PERSON_NAME",
+            "sexual_positions": {
+                "POSITION_1": {
+                    "pleasure": 80.0,
+                    "hardness": 60.0
+                },
+                "POSITION_2": {
+                    "pleasure": 70.0,
+                    "hardness": 40.0
+                }
+            },
+            "initial_energy": 90.0,
+            "initial_pleasure": 50.0,
+            "current_energy": 90.0,
+            "current_pleasure": 50.0,
+            "orgasm_pleasure": 90.0
+        }
+    ],
+    "positions": [
+        {
+            "name": "POSITION_1"
+        },
+        {
+            "name": "POSITION_2"
+        }
+    ]
+}
+\end{verbatim}
+\newpage
+Siguiendo los convenios de un archivo json, cada persona que se incluya debe estar dentro de "people", y cada posición dentro de "positions". Las llaves que están en mayúsculas son las que se deben cambiar por los valores deseados. Es importante aclarar, que cómo se ve en el ejemplo anterior, cada persona ha de tener los datos de placer y dificultad por cada postura siguiendo la estructura indicada. Los valores numéricos puestos en el ejemplo son arbitrarios y pueden ser cambiados por los valores deseados.
 
 \end{document}
