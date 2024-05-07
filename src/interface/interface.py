@@ -411,7 +411,7 @@ class Interface:
 
             if entry:
                 os.system("clear")
-                self.options[List(self.options.keys())[int(entry)]]()
+                self.options[list(self.options.keys())[int(entry)]]()
             else:
                 break
 
