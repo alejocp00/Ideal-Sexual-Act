@@ -3,6 +3,7 @@
 from src.entities.people import People
 from src.entities.sexual_position import SexualPosition
 from pulp import LpProblem, LpVariable, lpSum, LpMaximize
+from typing import List
 
 
 class ProblemsTypes:
@@ -16,14 +17,14 @@ class ProblemsTypes:
 
 
 class AbstractProblem:
-    def __init__(self, peoples: list[People], positions: list[SexualPosition]):
+    def __init__(self, peoples: List[People], positions: List[SexualPosition]):
         self.J = peoples
         self.N = positions
         self.P_t = [people.orgasm_pleasure for people in peoples]
         self.C = self._build_C()
         self.Pa = self._build_P()
 
-    def _build_C(self) -> list[list[int]]:
+    def _build_C(self) -> List[List[int]]:
         C = [[0 for _ in range(len(self.J))] for _ in range(len(self.N))]
 
         for i, position in enumerate(self.N):
@@ -32,7 +33,7 @@ class AbstractProblem:
 
         return C
 
-    def _build_P(self) -> list[list[int]]:
+    def _build_P(self) -> List[List[int]]:
         P = [[0 for _ in range(len(self.J))] for _ in range(len(self.N))]
 
         for i, position in enumerate(self.N):
