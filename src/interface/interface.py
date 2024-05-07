@@ -1,4 +1,5 @@
 import os
+from typing import List
 from src.entities.sexual_position import SexualPosition
 from src.entities.people import People
 from src.problems.abstract_problem import AbstractProblem, ProblemsTypes
@@ -50,9 +51,9 @@ class Options:
 class Interface:
 
     def __init__(self):
-        self.__sexual_positions: list[SexualPosition] = []
-        self.__people: list[People] = []
-        self.__problems: list[ProblemsTypes] = [
+        self.__sexual_positions: List[SexualPosition] = []
+        self.__people: List[People] = []
+        self.__problems: List[ProblemsTypes] = [
             ProblemsTypes.MAX_TIME,
             ProblemsTypes.MAX_MIN_PLEASURE,
             ProblemsTypes.MINIMIZE_MAX_TIRED,
@@ -63,12 +64,12 @@ class Interface:
             Options.CREATE_SEXUAL_POSITION: self.__create_sexual_position,
             Options.EDIT_SEXUAL_POSITION: self.__edit_sexual_position,
             Options.DELETE_SEXUAL_POSITION: self.__delete_sexual_position,
-            Options.LIST_SEXUAL_POSITIONS: self.__list_sexual_positions,
+            Options.LIST_SEXUAL_POSITIONS: self.__List_sexual_positions,
             Options.CREATE_PEOPLE_NAME: self.__create_people,
             Options.EDIT_PEOPLE: self.__edit_people,
             Options.DELETE_PEOPLE: self.__delete_people,
-            Options.LIST_PEOPLE: self.__list_people,
-            Options.LIST_PEOPLE_AND_POSITIONS: self.__list_people_and_positions,
+            Options.LIST_PEOPLE: self.__List_people,
+            Options.LIST_PEOPLE_AND_POSITIONS: self.__List_people_and_positions,
             Options.SELECT_PROBLEM: self.__select_problem,
             Options.EXPORT_DATA: self.__export_data,
             Options.LOAD_DATA: self.__load_data,
@@ -137,7 +138,7 @@ class Interface:
                     )
                     people.remove_sexual_position(old_name)
 
-    def __list_sexual_positions(self):
+    def __List_sexual_positions(self):
         """Print all sexual positions"""
         self.print_sexual_positions()
         input("Press any key to continue")
@@ -259,7 +260,7 @@ class Interface:
                     self.__people[-1].initial_energy = initial_energy
                     self.__people[-1].initial_pleasure = initial_pleasure
 
-    def __list_people(self):
+    def __List_people(self):
         """Print all people"""
         self.print_people()
         input("Press any key to continue")
@@ -354,7 +355,7 @@ class Interface:
         for index, people in enumerate(self.__people):
             print(f"{index}: {people.name}")
 
-    def __list_people_and_positions(self):
+    def __List_people_and_positions(self):
         """Print all people and their pleasure and hardness for each sexual position"""
         for people in self.__people:
             print(f"{people.name}:")
@@ -410,7 +411,7 @@ class Interface:
 
             if entry:
                 os.system("clear")
-                self.options[list(self.options.keys())[int(entry)]]()
+                self.options[List(self.options.keys())[int(entry)]]()
             else:
                 break
 

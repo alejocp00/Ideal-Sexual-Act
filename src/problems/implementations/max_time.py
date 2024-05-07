@@ -1,3 +1,4 @@
+from typing import List
 from pulp import LpProblem, LpVariable, lpSum, LpMaximize
 from src.problems.abstract_problem import AbstractProblem
 from src.entities.people import People
@@ -5,7 +6,7 @@ from src.entities.sexual_position import SexualPosition
 
 
 class MaxTime(AbstractProblem):
-    def __init__(self, peoples: list[People], positions: list[SexualPosition]):
+    def __init__(self, peoples: List[People], positions: List[SexualPosition]):
         super().__init__(peoples, positions)
 
     def objective_function(self):
@@ -14,7 +15,7 @@ class MaxTime(AbstractProblem):
     def constraints(self):
         constraints = []
 
-        # Después de cada postura, la energía dismunuye de manera proporcional al tiempo que se permanezca en ella
+        # Después de cada postura, la energía disminuye de manera proporcional al tiempo que se permanezca en ella
         for i in range(1, len(self.N)):
             for j in range(len(self.J)):
                 constraints.append(

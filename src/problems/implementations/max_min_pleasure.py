@@ -1,3 +1,4 @@
+from typing import List
 from src.problems.abstract_problem import AbstractProblem
 from src.entities.people import People
 from src.entities.sexual_position import SexualPosition
@@ -5,7 +6,7 @@ from pulp import LpVariable, lpSum, LpMaximize, LpProblem
 
 
 class MaxMinPleasure(AbstractProblem):
-    def __init__(self, peoples: list[People], positions: list[SexualPosition]):
+    def __init__(self, peoples: List[People], positions: List[SexualPosition]):
         super().__init__(peoples, positions)
         self.h = LpVariable("h", cat="Continuous")
 
